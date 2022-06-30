@@ -1,53 +1,53 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Torch from 'react-native-torch';
 import RNShake from 'react-native-shake';
 
-
 const App = () => {
-  const [toggle, setToggle] = useState(false); //false
+  const [toggle, setToggle] = useState(false);
 
-  // if toggle return light
-  const handleChangetoggle = () => setToggle(oldtoggle => !oldtoggle);
-  
+  const handleChangeToggle = () => setToggle(oldToggle => !oldToggle);
+
   useEffect(() => {
-    // Liga flash do cell
+    // Liga flash do celular
     Torch.switchState(toggle);
   }, [toggle]);
 
   useEffect(() => {
     /**
-     * Quando o cell for chocaolhado, mudaremos o toggle
+     * Quando o celular for chacoalhado, mudaremos o toggle
      */
     const subscription = RNShake.addListener(() => {
-      handleChangetoggle(oldtoggle => !oldtoggle);
+      setToggle(oldToggle => !oldToggle);
     });
-    // Essa funcao vai ser chamada quando o componets for ser desmontado
-    return () => subscription.remove();
-  },[]);
 
-  return ( 
-  <View style={toggle ? style.containerLight : style.container}>
-    <TouchableOpacity onPress={handleChangetoggle}>
-    <Image 
-      style={toggle ? style.lightingOn : style.lightingOff} 
-      source={
-        toggle 
-        ? require('./assets/icons/eco-light.png')
-        : require('./assets/icons/eco-light-off.png')
-        } 
-      />
-    <Image 
-      style={style.dioLogo} 
-      source={
-        toggle 
-        ? require('./assets/icons/logo-dio.png')
-        : require('./assets/icons/logo-dio-white.png')
-        } 
-      />
-    </TouchableOpacity>  
-  </View>
-  );  
+    // Essa func vai ser chamada quando o componets
+    // For ser desmontado
+    return () => subscription.remove();
+  }, []);
+
+  return (
+    <View style={toggle ? style.containerLight : style.container}>
+      <TouchableOpacity onPress={handleChangeToggle}>
+        <Image
+          style={toggle ? style.lightingOn : style.lightingOff}
+          source={
+            toggle
+              ? require('./assets/icons/eco-light.png')
+              : require('./assets/icons/eco-light-off.png')
+          }
+        />
+        <Image
+          style={style.dioLogo}
+          source={
+            toggle
+              ? require('./assets/icons/logo-dio.png')
+              : require('./assets/icons/logo-dio-white.png')
+          }
+        />
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default App;
